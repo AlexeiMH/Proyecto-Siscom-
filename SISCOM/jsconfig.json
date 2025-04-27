@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./", // Base para las rutas relativas
+    "paths": {
+      "@/*": ["src/*"] // Alias para la carpeta src
+    }
+  },
+  "include": [
+    "src/**/*" // Incluir solo archivos dentro de la carpeta src
+  ],
+  "exclude": [
+    "node_modules", // Excluir dependencias externas
+    "dist"          // Excluir archivos generados en la compilación
+  ]
+}

@@ -1,0 +1,35 @@
+# Etapa de construcción
+FROM node:18 AS build
+
+# Configurar el directorio de trabajo
+WORKDIR /app
+
+# Copiar los archivos package.json y package-lock.json
+COPY package*.json ./
+
+# Instalar las dependencias
+RUN npm install
+
+# Copiar el resto del código fuente
+COPY . .
+
+# Construir la aplicación
+RUN npm run build
+
+# Etapa de producción
+FROM node:18
+
+# Configurar el directorio de trabajo
+WORKDIR /app
+
+# Instalar el paquete 'serve' globalmente
+RUN npm install -g serve
+
+# Copiar los archivos estáticos generados al directorio de producción
+COPY --from=build /app/dist ./dist
+
+# Exponer el puerto 80
+EXPOSE 80
+
+# Comando para iniciar el servidor estático
+CMD ["serve", "-s", "dist", "-l", "80"]
